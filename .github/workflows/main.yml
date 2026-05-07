@@ -1,0 +1,16 @@
+name: Windows-VPS-UI
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Setup Tmate
+        uses: mxschmitt/action-tmate@v3
+        # سنستخدم tmate للحفاظ على الجلسة مفتوحة
+        
+      - name: Preparing RDP
+        run: |
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
+          Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+          # هنا نقوم بتجهيز الويندوز لاستقبال الاتصال
